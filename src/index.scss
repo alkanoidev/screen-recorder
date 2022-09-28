@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  height: 100%;
+  @apply bg-light dark:bg-dark;
+
+  body {
+    height: 100%;
+
+    #root {
+      height: 100%;
+    }
+  }
+}
