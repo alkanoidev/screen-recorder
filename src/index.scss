@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+* {
+  @apply text-dark dark:text-light;
+}
 html {
   height: 100%;
   @apply bg-light dark:bg-dark;

@@ -1,10 +1,14 @@
-import React from "react";
+type Props = { children: any; onClick: () => void; className?: string };
 
-type Props = { children: any };
-
-export default function IconButton({ children }: Props) {
+export default function IconButton({ children, onClick, className }: Props) {
   return (
-    <button className="rounded-full bg-dark dark:bg-light px-2 py-2 flex items-center justify-center gap-2 font-bold hover:scale-105 transition">
+    <button
+      onClick={onClick}
+      className={
+        "rounded-full bg-dark/80 dark:bg-light px-2 py-2 flex items-center justify-center gap-2 font-bold hover:scale-105 transition" +
+        className
+      }
+    >
       {children}
     </button>
   );
