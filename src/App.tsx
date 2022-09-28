@@ -6,15 +6,42 @@ import Toolbar from "./components/Toolbar";
 
 export default function App() {
   const [isRecording, setIsRecording] = useState(false);
+  const [isAudioOn, setIsAudioOn] = useState(false);
+  const videoRef = useRef<null | HTMLVideoElement>(null);
+
+  let stream: MediaStream;
+  let recorder: MediaRecorder;
 
   useEffect(() => {
     if (isRecording) {
+      const startRecording = async () => {
+        stream = await navigator.mediaDevices.getDisplayMedia({
+          audio: isAudioOn,
+          video: {},
+        });
+        recorder = new MediaRecorder(stream);
+        const chunks: BlobPart[] = [];
+
+        recorder.ondataavailable = (e) => {
+          chunks.push(e.data);
+        };
+        recorder.start();
+        recorder.onstop = (e) => {
+          const blob = new Blob(chunks, { type: typeof chunks[0] }); // vrv ovde greska
+          if (videoRef.current !== null)
+            videoRef.current.src = URL.createObjectURL(blob);
+        };
+      };
+
+      startRecording();
+    } else {
+      if (typeof recorder !== "undefined") recorder.stop();
     }
   }, [isRecording]);
 
   return (
     <div className="bg-light dark:bg-dark h-full">
-      <video muted width="500px" height="500px"></video>
+      <video ref={videoRef} autoPlay muted width="500px" height="500px"></video>
       <Toolbar>
         {isRecording ? (
           <StopButton
