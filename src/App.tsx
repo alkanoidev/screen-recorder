@@ -5,12 +5,19 @@ import IconButton from "./components/Buttons/IconButton";
 import Toolbar from "./components/Toolbar";
 import SettingsModal from "./components/SettingsModal";
 import { useSettingsContext } from "./context/Settings";
+import DownloadModal from "./components/DownloadModal";
 
 export default function App() {
   const [isRecording, setIsRecording] = useState(false);
-  const { isSettingsModalOpen, setIsSettingsModalOpen, isAudioOn } =
-    useSettingsContext();
+  const {
+    isSettingsModalOpen,
+    setIsSettingsModalOpen,
+    isAudioOn,
+    isDownloadModalOpen,
+    setIsDownloadModalOpen,
+  } = useSettingsContext();
   const videoRef = useRef<null | HTMLVideoElement>(null);
+  const [downloadURL, setDownloadURL] = useState("");
 
   let stream: MediaStream;
   let recorder: MediaRecorder;
@@ -21,8 +28,9 @@ export default function App() {
         try {
           stream = await navigator.mediaDevices.getDisplayMedia({
             audio: isAudioOn,
-            video: {},
+            video: { frameRate: { ideal: 30 } },
           });
+          if (videoRef.current !== null) videoRef.current.srcObject = stream;
         } catch (err) {
           if (err) setIsRecording(false);
         }
@@ -30,7 +38,11 @@ export default function App() {
         recorder = new MediaRecorder(stream);
 
         recorder.onstop = (e) => {
-          const blob = new Blob(chunks, { type: typeof chunks[0] }); // vrv ovde greska
+          const blob = new Blob(chunks, { type: "video/mp4" });
+          const url = URL.createObjectURL(blob);
+          setDownloadURL(url);
+          setIsDownloadModalOpen(true);
+
           if (videoRef.current !== null)
             videoRef.current.src = URL.createObjectURL(blob);
         };
@@ -39,12 +51,10 @@ export default function App() {
         recorder.ondataavailable = (e) => {
           chunks.push(e.data);
         };
-        recorder.start();
+        recorder.start(200);
       };
 
       startRecording();
-    } else {
-      if (typeof recorder !== "undefined") recorder.stop();
     }
   }, [isRecording]);
 
@@ -57,12 +67,18 @@ export default function App() {
         height={50}
         className="absolute left-1 top-1"
       />
-      <video ref={videoRef} autoPlay muted width="500px" height="500px"></video>
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        className="rounded-md aspect-video w-[800px]"
+      ></video>
       <Toolbar>
         {isRecording ? (
           <StopButton
             onClick={() => {
               setIsRecording(false);
+              recorder.stop();
             }}
           />
         ) : (
@@ -93,6 +109,8 @@ export default function App() {
           {isSettingsModalOpen && <SettingsModal />}
         </div>
       </Toolbar>
+
+      {isDownloadModalOpen && <DownloadModal downloadURL={downloadURL} />}
     </div>
   );
 }

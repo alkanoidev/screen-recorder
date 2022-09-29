@@ -1,4 +1,4 @@
-type Props = { children: any; onClick: () => void };
+type Props = { children: any; onClick?: () => void };
 
 export default function Button({ children, onClick }: Props) {
   return (

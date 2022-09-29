@@ -8,6 +8,8 @@ type SettingsContextType = {
   setIsSettingsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isAudioOn: boolean;
   setIsAudioOn: React.Dispatch<React.SetStateAction<boolean>>;
+  isDownloadModalOpen: boolean;
+  setIsDownloadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const SettingsContext = React.createContext<SettingsContextType>(
@@ -20,6 +22,8 @@ export const useSettingsContext = () => {
     setIsSettingsModalOpen,
     isAudioOn,
     setIsAudioOn,
+    isDownloadModalOpen,
+    setIsDownloadModalOpen,
   } = useContext(SettingsContext);
 
   return {
@@ -27,6 +31,8 @@ export const useSettingsContext = () => {
     setIsSettingsModalOpen,
     isAudioOn,
     setIsAudioOn,
+    isDownloadModalOpen,
+    setIsDownloadModalOpen,
   };
 };
 
@@ -34,6 +40,8 @@ export default function SettingsContextProvider({ children }: Props) {
   const [isSettingsModalOpen, setIsSettingsModalOpen] =
     useState<boolean>(false);
   const [isAudioOn, setIsAudioOn] = useState<boolean>(false);
+  const [isDownloadModalOpen, setIsDownloadModalOpen] =
+    useState<boolean>(false);
 
   return (
     <SettingsContext.Provider
@@ -42,6 +50,8 @@ export default function SettingsContextProvider({ children }: Props) {
         setIsSettingsModalOpen,
         isAudioOn,
         setIsAudioOn,
+        isDownloadModalOpen,
+        setIsDownloadModalOpen,
       }}
     >
       {children}
