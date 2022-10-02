@@ -6,8 +6,8 @@ export default function SettingsModal() {
   const { setIsSettingsModalOpen } = useSettingsContext();
   return (
     <motion.div
-      className="w-screen h-screen sm:min-h-[600px] sm:min-w-[500px] sm:w-auto sm:h-auto bg-off-light dark:bg-off-dark 
-                shadow absolute sm:-z-10 z-10 -top-[100vh] -left-[250px] sm:top-[-620px] sm:-left-[225px] rounded-lg p-2 border dark:border-none"
+      className="w-screen h-screen sm:min-h-[600px] sm:min-w-[500px] sm:w-auto sm:h-auto bg-off-dark 
+                shadow absolute sm:-z-10 z-10 -top-[100vh] -left-[250px] sm:top-[-620px] sm:-left-[225px] rounded-lg p-2 border-none"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
     >
