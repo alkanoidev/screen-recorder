@@ -10,6 +10,10 @@ type SettingsContextType = {
   setIsAudioOn: React.Dispatch<React.SetStateAction<boolean>>;
   isDownloadModalOpen: boolean;
   setIsDownloadModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  recordingCountdown: boolean | 3000 | 5000 | 10000;
+  setRecordingCountDown: React.Dispatch<
+    React.SetStateAction<boolean | 3000 | 5000 | 10000>
+  >;
 };
 
 export const SettingsContext = React.createContext<SettingsContextType>(
@@ -24,6 +28,8 @@ export const useSettingsContext = () => {
     setIsAudioOn,
     isDownloadModalOpen,
     setIsDownloadModalOpen,
+    recordingCountdown,
+    setRecordingCountDown,
   } = useContext(SettingsContext);
 
   return {
@@ -33,6 +39,8 @@ export const useSettingsContext = () => {
     setIsAudioOn,
     isDownloadModalOpen,
     setIsDownloadModalOpen,
+    recordingCountdown,
+    setRecordingCountDown,
   };
 };
 
@@ -42,6 +50,9 @@ export default function SettingsContextProvider({ children }: Props) {
   const [isAudioOn, setIsAudioOn] = useState<boolean>(false);
   const [isDownloadModalOpen, setIsDownloadModalOpen] =
     useState<boolean>(false);
+  const [recordingCountdown, setRecordingCountDown] = useState<
+    boolean | 3000 | 5000 | 10000
+  >(false);
 
   return (
     <SettingsContext.Provider
@@ -52,6 +63,8 @@ export default function SettingsContextProvider({ children }: Props) {
         setIsAudioOn,
         isDownloadModalOpen,
         setIsDownloadModalOpen,
+        recordingCountdown,
+        setRecordingCountDown,
       }}
     >
       {children}

@@ -1,5 +1,6 @@
 import Button from "./Buttons/Button";
 import { useSettingsContext } from "../context/Settings";
+import { motion } from "framer-motion";
 
 type Props = {
   downloadURL: string;
@@ -10,25 +11,37 @@ export default function DownloadModal({ downloadURL }: Props) {
 
   return (
     <div className="z-10 w-screen h-screen fixed top-0 left-0 bg-light dark:bg-dark grid place-content-center">
-      <div className="h-full flex flex-col items-center gap-20">
+      <div className="h-full flex flex-col items-center gap-10">
         <video
           autoPlay
           controls
           src={downloadURL}
           className="rounded-md aspect-video w-[800px] ring-light/20 ring"
         ></video>
-        <div className="flex gap-2">
+        <motion.div
+          className="flex gap-2"
+          initial={{ y: 100 }}
+          animate={{ y: 0 }}
+        >
           <a href={downloadURL} download="screen-recording.mp4">
             <Button>
               <svg
+                width="28"
+                height="28"
+                viewBox="0 0 19 19"
+                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                width={28}
-                height={28}
-                viewBox="0 0 512 512"
               >
                 <path
-                  className="fill-dark"
-                  d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zM432 456c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"
+                  d="M2 12C2 11.4477 1.55228 11 1 11C0.447715 11 0 11.4477 0 12H2ZM1 17.5H0C0 18.0523 0.447715 18.5 1 18.5L1 17.5ZM18 17.5V18.5C18.5523 18.5 19 18.0523 19 17.5H18ZM19 12C19 11.4477 18.5523 11 18 11C17.4477 11 17 11.4477 17 12H19ZM0 12V17.5H2V12H0ZM1 18.5H18V16.5H1V18.5ZM19 17.5V12H17V17.5H19Z"
+                  fill="black"
+                />
+                <path
+                  d="M9.5 1V6.5V9.25V12M9.5 12L13 7.875M9.5 12L6 7.875"
+                  stroke="black"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                 />
               </svg>
               Download
@@ -41,7 +54,7 @@ export default function DownloadModal({ downloadURL }: Props) {
           >
             New Recording
           </Button>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

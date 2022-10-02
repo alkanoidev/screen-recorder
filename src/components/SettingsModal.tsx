@@ -1,17 +1,19 @@
 import { motion } from "framer-motion";
 import { useSettingsContext } from "../context/Settings";
 import IconButton from "./Buttons/IconButton";
+import SettingsItem from "./SettingsItem";
+import SettingsRadioButton from "./SettingsRadioButton";
 
 export default function SettingsModal() {
   const { setIsSettingsModalOpen } = useSettingsContext();
   return (
     <motion.div
-      className="w-screen h-screen sm:min-h-[600px] sm:min-w-[500px] sm:w-auto sm:h-auto bg-off-dark 
+      className="w-screen h-screen sm:min-h-[600px] sm:min-w-[500px] sm:w-auto sm:h-auto bg-off-dark gap-3 
                 shadow absolute sm:-z-10 z-10 -top-[100vh] -left-[250px] sm:top-[-620px] sm:-left-[225px] rounded-lg p-2 border-none"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
     >
-      <div className="w-full flex justify-between">
+      <div className="w-full flex justify-between mb-3 items-center">
         <h1 className="font-bold">Settings</h1>
         <IconButton
           onClick={() => {
@@ -31,6 +33,12 @@ export default function SettingsModal() {
           </svg>
         </IconButton>
       </div>
+      <SettingsItem title="Recording Countdown">
+        <SettingsRadioButton title="OFF" />
+        <SettingsRadioButton title="3s" />
+        <SettingsRadioButton title="5s" />
+        <SettingsRadioButton title="10s" />
+      </SettingsItem>
     </motion.div>
   );
 }

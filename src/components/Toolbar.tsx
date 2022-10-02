@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-type Props = { children: any; isRecording: boolean };
+type Props = { children: any; isRecording?: boolean };
 
 export default function Toolbar({ children, isRecording }: Props) {
   return (
