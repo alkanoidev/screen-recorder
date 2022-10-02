@@ -40,11 +40,11 @@ export default function App() {
         recorder.onstop = (e) => {
           const blob = new Blob(chunks, { type: "video/mp4" });
           const url = URL.createObjectURL(blob);
+          setIsRecording(false);
           setDownloadURL(url);
           setIsDownloadModalOpen(true);
 
-          if (videoRef.current !== null)
-            videoRef.current.src = URL.createObjectURL(blob);
+          if (videoRef.current !== null) videoRef.current.srcObject = null;
         };
 
         const chunks: BlobPart[] = [];
@@ -73,7 +73,7 @@ export default function App() {
         muted
         className="rounded-md aspect-video w-[800px]"
       ></video>
-      <Toolbar>
+      <Toolbar isRecording={isRecording}>
         {isRecording ? (
           <StopButton
             onClick={() => {
