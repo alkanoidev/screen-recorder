@@ -67,14 +67,7 @@ export default function App() {
         className="rounded-md aspect-video w-[800px] bg-off-dark/20 ring ring-off-dark/70 mt-5 hover:cursor-pointer"
       ></video>
       <Toolbar isRecording={isRecording}>
-        {isRecording ? (
-          <StopButton
-            onClick={() => {
-              setIsRecording(false);
-              recorder.stop();
-            }}
-          />
-        ) : (
+        {!isRecording && (
           <StartButton
             onClick={() => {
               startRecording();
